@@ -19,7 +19,12 @@
             <source>src/bin/server.sh</source>
             <outputDirectory>/bin</outputDirectory>
         </file>
+        <file>
+            <source></source>
+            <outputDirectory>/patches</outputDirectory>
+        </file>
     </files>
+
     <includeBaseDirectory>false</includeBaseDirectory>
     <dependencySets>
         <dependencySet>

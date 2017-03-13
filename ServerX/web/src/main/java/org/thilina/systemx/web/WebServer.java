@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
+import org.thilina.systemx.core.Division;
 
 /**
  * Hello world!
@@ -52,6 +53,13 @@ public class WebServer{
                             request.getParameter("a") +
                             " B = " +
                             request.getParameter("b"));
+
+                    int output = Division.getDivision(
+                            Integer.parseInt(request.getParameter("a")),
+                            Integer.parseInt(request.getParameter("b")));
+                    System.out.println("Division is: " + output);
+                    response.getWriter().println("<br/>Division is: " + output);
+
             }
             else {
                     response.setContentType("text/html; charset=utf-8");
