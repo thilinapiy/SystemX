@@ -7,6 +7,15 @@ public class Division {
 
     public static int getDivision(int a, int b){
         System.out.println("Divition ... ");
-        return a/b;
+
+        // update for the patch
+        int output;
+        try {
+            output = a/b;
+        }catch (Exception e){
+            System.out.println(e.toString());
+            return -1;
+        }
+        return output;
     }
 }
