@@ -1,0 +1,1 @@
+/opt/java/bin/java  -classpath ~/Downloads/jd-gui-1.4.0.jar org.jd.gui.App

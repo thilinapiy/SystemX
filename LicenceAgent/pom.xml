@@ -9,80 +9,140 @@
   </parent>
   <groupId>org.thilina.systemx</groupId>
   <artifactId>LicenceAgent</artifactId>
-  <version>0.1</version>
+  <version>${parent.version}</version>
   <name>LicenceAgent</name>
   <url>http://maven.apache.org</url>
+
+<repositories>
+    <!--  WSO2 released artifact repository  -->
+    <repository>
+        <id>wso2.releases</id>
+        <name>WSO2 Releases Repository</name>
+        <url>
+            http://maven.wso2.org/nexus/content/repositories/releases/
+        </url>
+        <releases>
+            <enabled>true</enabled>
+            <updatePolicy>daily</updatePolicy>
+            <checksumPolicy>ignore</checksumPolicy>
+        </releases>
+    </repository>
+    <!--  WSO2 Snapshot artifact repository  -->
+    <repository>
+        <id>wso2.snapshots</id>
+        <name>WSO2 Snapshot Repository</name>
+        <url>
+            http://maven.wso2.org/nexus/content/repositories/snapshots/
+        </url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>daily</updatePolicy>
+        </snapshots>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+    </repository>
+    <repository>
+        <id>wso2-nexus</id>
+        <name>WSO2 internal Repository</name>
+        <url>
+            http://maven.wso2.org/nexus/content/groups/wso2-public/
+        </url>
+        <releases>
+            <enabled>true</enabled>
+            <updatePolicy>daily</updatePolicy>
+            <checksumPolicy>ignore</checksumPolicy>
+        </releases>
+    </repository>
+</repositories>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>4.5.2</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+        <dependency>
+      <groupId>org.thilina.systemx</groupId>
+      <artifactId>web</artifactId>
+      <version>${project.parent.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.thilina.systemx</groupId>
+      <artifactId>core</artifactId>
+      <version>${project.parent.version}</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-  </dependencies>
-
-
-
+    <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.5</version>
+    </dependency>
+    </dependencies>
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-          <encoding>UTF-8</encoding>
+          <archive>
+            <manifest>
+              <mainClass>org.thilina.systemx.bootstrap.App</mainClass>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>../libs/</classpathPrefix>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
-
       <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>jar-with-dependencies</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-              <descriptorRefs>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
-              </descriptorRefs>
-              <archive>
-                <manifest>
-                  <addClasspath>true</addClasspath>
-                  <mainClass>org.thilina.systemx.bootstrap.App</mainClass>
-                </manifest>
-              </archive>
+                <source>1.7</source>
+                <target>1.7</target>
             </configuration>
-          </execution>
-          <!-- executionV>
-            <id>dist</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptors>
-                <descriptor>src/main/config/dist.xml</descriptor>
-              </descriptors>
-            </configuration>
-          </execution -->
-        </executions>
-      </plugin>
+        </plugin>
+        <plugin>
+            <groupId>com.github.wvengen</groupId>
+            <artifactId>proguard-maven-plugin</artifactId>
+            <version>2.0.14</version>
+            <dependencies>
+                <dependency>
+                    <groupId>net.sf.proguard</groupId>
+                    <artifactId>proguard-base</artifactId>
+                    <version>5.3.2</version>
+                    <scope>compile</scope>
+                </dependency>
+            </dependencies>
+            <executions>
+                <execution>
+                    <id>proguard</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>proguard</goal>
+                    </goals>
+                    <configuration>
+                        <maxMemory>256m</maxMemory>
+                        <libs>
+                            <lib>${java.home}/lib/rt.jar</lib>
+                            <lib>${java.home}/lib/jsse.jar</lib>
+                        </libs>
+                        <obfuscate>true</obfuscate>
+                        <attach>true</attach>
+                        <addMavenDescriptor>true</addMavenDescriptor>
+                        <proguardInclude>${project.basedir}/proguard.conf</proguardInclude>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
     </plugins>
   </build>
-
-
 </project>

@@ -8,9 +8,9 @@
     <version>0.1</version>
   </parent>
   <groupId>org.thilina.systemx</groupId>
-  <artifactId>web</artifactId>
+  <artifactId>core</artifactId>
   <version>${project.parent.version}</version>
-  <name>web</name>
+  <name>core</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,16 +22,5 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-      <dependency>
-          <groupId>org.eclipse.jetty</groupId>
-          <artifactId>jetty-servlet</artifactId>
-          <!-- version>9.4.0.v20161208</version-->
-          <version>9.2.13.v20150730</version>
-      </dependency>
-      <dependency>
-          <groupId>org.thilina.systemx</groupId>
-          <artifactId>core</artifactId>
-          <version>0.1</version>
-      </dependency>
   </dependencies>
 </project>

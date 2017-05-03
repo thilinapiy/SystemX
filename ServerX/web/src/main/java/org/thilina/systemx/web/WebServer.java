@@ -17,7 +17,7 @@ public class WebServer{
 
     public static void startServer() throws Exception
     {
-        Server server = new Server(8080);
+        Server server = new Server(8081);
         ServletHandler handler = new ServletHandler();
         server.setHandler(handler);
         handler.addServletWithMapping(WebServlet.class, "/*");
@@ -54,9 +54,9 @@ public class WebServer{
                             " B = " +
                             request.getParameter("b"));
 
-                    int output = Division.getDivision(
-                            Integer.parseInt(request.getParameter("a")),
-                            Integer.parseInt(request.getParameter("b")));
+                    Double output = Division.getDivision(
+                            Double.parseDouble(request.getParameter("a")),
+                            Double.parseDouble(request.getParameter("b")));
                     System.out.println("Division is: " + output);
                     response.getWriter().println("<br/>Division is: " + output);
 
